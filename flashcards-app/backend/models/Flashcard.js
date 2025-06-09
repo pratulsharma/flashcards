@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const FlashcardSchema = new mongoose.Schema({
   question:    { type: String, required: true },
-  answer:      { type: String, required: true },
+  answer:      { type: String },
   image:       { type: String },
   category:    { type: String, default: 'general' },
   subcategory: { type: String, default: '' },    // ← new

@@ -10,14 +10,37 @@ function App() {
   const [cards, setCards] = useState([]);
   const [modal, setModal] = useState({ open: false, card: null });
   const [activeTab, setActiveTab] = useState('general');
+  const [category, setcategory] = useState(['general']); // Initialize with 'general'
 
+  // useEffect(() => {
+  //   API.get('/').then(res => setCards(res.data));
+  // }, []);
   useEffect(() => {
-    API.get('/').then(res => setCards(res.data));
+    // Fetch cards and extract unique category
+    API.get('/').then(res => {
+      setCards(res.data);
+      console.log("RES", res.data)
+      const uniquecategory = Array.from(
+        new Set(res.data.map(c => c.category || 'general'))
+      );
+      console.log("CAT", category, uniquecategory)
+      console.log("UCAT", uniquecategory)
+      setcategory(uniquecategory);
+    });
   }, []);
+  // const refresh = () => API.get('/').then(res => setCards(res.data));
+    const refresh = async () => {
+    const res = await API.get('/');
+    setCards(res.data);
+    const uniquecategory = Array.from(
+      new Set(res.data.map(c => c.category || 'general'))
+    );
+    setcategory(uniquecategory);
+  };
 
-  const refresh = () => API.get('/').then(res => setCards(res.data));
 
   // Treat missing category as general
+  // const filtered = cards.filter(c => (c.category || 'general') === activeTab);
   const filtered = cards.filter(c => (c.category || 'general') === activeTab);
 
   return (

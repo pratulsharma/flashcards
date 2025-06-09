@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Tabs({ tabs, active, onChange }) {
     const [items, setItems] = useState(tabs);
     const [editing, setEditing] = useState(null);
     const [newTab, setNewTab] = useState('');
-
+console.log("TABS", tabs)
+    useEffect(() => {
+        setItems(tabs);
+    }, [tabs]);
     const addTab = () => {
         const name = newTab.trim();
         if (name && !items.includes(name)) {

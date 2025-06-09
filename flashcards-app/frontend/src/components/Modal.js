@@ -122,6 +122,9 @@ export default function Modal({ card, category, onClose, onSaved }) {
   const [answerText, setAnswerText] = useState('');
   const [pastedImage, setPastedImage] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(card?.category || category);
+ const deleteImage = () => {
+    setPastedImage(null);
+  };
 
   useEffect(() => {
     if (card) {
@@ -217,6 +220,13 @@ export default function Modal({ card, category, onClose, onSaved }) {
         {pastedImage && (
           <div className="image-preview">
             <img src={pastedImage} alt="pasted preview" />
+             <button 
+              className="delete-image-btn" 
+              onClick={deleteImage}
+              title="Delete image"
+            >
+              ×
+            </button>
           </div>
         )}
 
